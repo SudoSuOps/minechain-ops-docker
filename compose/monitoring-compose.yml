@@ -1,0 +1,21 @@
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+
+  dcgm-exporter:
+    image: ghcr.io/sudosuops/minechain-ops-docker:dcgm-exporter-latest
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"

@@ -1,0 +1,11 @@
+services:
+  miner:
+    image: ghcr.io/sudosuops/minechain-ops-docker:miner-rigel-latest
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    volumes:
+      - ../configs:/configs:ro
